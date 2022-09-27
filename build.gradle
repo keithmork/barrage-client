@@ -1,0 +1,46 @@
+plugins {
+	id 'org.springframework.boot' version '2.6.3'
+	id 'io.spring.dependency-management' version '1.0.13.RELEASE'
+	id 'pl.allegro.tech.build.axion-release' version '1.13.14'
+	id 'java'
+}
+
+group = 'me.keithmo'
+version = scmVersion.version
+sourceCompatibility = '17'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+	maven { url 'https://repo.spring.io/release' }
+}
+
+dependencies {
+	// https://github.com/alibaba/spring-cloud-alibaba/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E
+	implementation platform('com.alibaba.cloud:spring-cloud-alibaba-dependencies:2021.0.1.0')
+	implementation platform('org.springframework.cloud:spring-cloud-dependencies:2021.0.1')
+	implementation platform('org.springframework.boot:spring-boot-dependencies:2.6.3')
+
+	// https://mvnrepository.com/artifact/org.apache.dubbo/dubbo
+	implementation 'org.apache.dubbo:dubbo:2.7.17'
+	implementation 'com.alibaba.nacos:nacos-client'
+
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

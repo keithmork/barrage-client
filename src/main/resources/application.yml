@@ -1,0 +1,38 @@
+server:
+  port: 12345
+  http2:
+    enabled: true
+
+spring:
+  application:
+    name: barrage-client
+  cloud:
+    nacos:
+      discovery:
+        server-addr: nacos://localhost:8848
+        failure-tolerance-enabled: true
+  jackson:
+    default-property-inclusion: non_empty
+
+dubbo:
+  application:
+    name: ${spring.application.name}
+    logger: slf4j
+  metadata-report:
+    address: ${spring.cloud.nacos.discovery.server-addr}
+  protocol:
+    name: dubbo
+    port: 12346
+  registry:
+    address: ${spring.cloud.nacos.discovery.server-addr}
+  consumer:
+    check: false
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: '*'
